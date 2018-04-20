@@ -66,6 +66,9 @@ def token_auth(f):
 
         username = kwargs.get(get_user_model().USERNAME_FIELD)
 
+        if '@' in username:
+            username = get_user_model().objects.get(email=username).username
+
         user = authenticate(
             request=info.context,
             username=username,
